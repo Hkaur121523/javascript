@@ -1,0 +1,1 @@
+Welcome to my collection of mini-projects! This repository contains a series of practical web development projects built using HTML, CSS, and JavaScript. These mini projects demonstrate a variety of web-based functionalities, ranging from calculators to weather apps, and aim to highlight fundamental web development skills.
