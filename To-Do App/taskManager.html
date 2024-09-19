@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tasks</title>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Task Manager</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            body {
+                background-color: #f7f9fc;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .main {
+                max-width: 450px;
+                width: 100%;
+                background-color: #fff;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                padding: 30px;
+                border-radius: 12px;
+            }
+
+            .main h1 {
+                text-align: center;
+                font-size: 28px;
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .work {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #userInp {
+                flex: 1;
+                padding: 10px;
+                font-size: 16px;
+                transition: border 0.3s ease;
+            }
+
+            #userInp:focus {
+                border-color: #007bff;
+            }
+
+            #taskBtn {
+                padding: 10px 15px;
+                font-size: 16px;
+                margin-left: 10px;
+                background: rgb(1, 60, 12);
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            #taskBtn:hover {
+                background-color: #218838;
+            }
+
+            #task_list {
+                margin-top: 20px;
+            }
+
+            #task_list li {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+                font-size: 18px;
+                transition: background-color 0.3s ease;
+            }
+
+            #task_list li:hover {
+                background-color: #f1f3f5;
+            }
+
+            #task_list li button {
+                padding: 8px 12px;
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            #task_list li button:hover {
+                background-color: #c82333;
+            }
+        </style>
+    </head>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Task Manager</h1>
+        <div class="work">
+            <input type="text" id="userInp" placeholder="Enter your task">
+            <button id="taskBtn">Add task</button>
+        </div>
+
+        <ul id="task_list">
+        </ul>
+    </div>
+
+    <script>
+        let userInp = document.querySelector("#userInp");
+        let taskBtn = document.querySelector("#taskBtn");
+        let task_list = document.querySelector("#task_list");
+
+        taskBtn.addEventListener("click", () => {
+            let task = userInp.value.trim();
+
+            if (task !== '' && task !== "First Enter your task") {
+                let newLi = `<li>
+                    <input type="checkbox"> ${task}
+                    <button class="deleteBtn">Delete</button>
+                </li>`;
+                task_list.innerHTML += newLi;
+                userInp.value = '';
+            } else {
+
+                userInp.value = "First Enter your task";
+                userInp.style.color = "red";
+                userInp.disabled = true;
+                taskBtn.disabled = true;
+
+
+                setTimeout(() => {
+                    userInp.value = '';
+                    userInp.style.color = "black";
+                    userInp.disabled = false;
+                    taskBtn.disabled = false;
+                }, 2000);
+            }
+
+
+            let deleteBtns = document.querySelectorAll('.deleteBtn');
+            deleteBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    btn.parentNode.remove();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

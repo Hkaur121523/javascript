@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light Simulation</title>
+    <style>
+      
+        .traffic-light {
+            width: 100px;
+            height: 300px;
+            background-color: black;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            margin: 20px auto;
+        }
+
+       
+        .light {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #333;
+            cursor: pointer;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .yellow {
+            background-color: yellow;
+        }
+
+        .green {
+            background-color: lime;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+
+        .dim {
+            opacity: 0.3;
+        }
+
+        .active {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="traffic-light">
+        <div class="light red dim" id="red-light"></div>
+        <div class="light yellow dim" id="yellow-light"></div>
+        <div class="light green dim" id="green-light"></div>
+    </div>
+
+
+    <div class="message" id="message">Click on a light!</div>
+
+    <script>
+   
+        let redLight = document.getElementById("red-light");
+        let yellowLight = document.getElementById("yellow-light");
+        let greenLight = document.getElementById("green-light");
+        let message = document.getElementById("message");
+
+    
+        function resetLights() {
+            redLight.classList.add("dim");
+            yellowLight.classList.add("dim");
+            greenLight.classList.add("dim");
+            redLight.classList.remove("active");
+            yellowLight.classList.remove("active");
+            greenLight.classList.remove("active");
+        }
+
+     
+        redLight.addEventListener('click', function() {
+            resetLights();
+            redLight.classList.remove("dim");
+            redLight.classList.add("active");  
+            message.textContent = "Stop";
+        });
+
+        yellowLight.addEventListener('click', function() {
+            resetLights();
+            yellowLight.classList.remove("dim");
+            yellowLight.classList.add("active");
+            message.textContent = "Wait";
+        });
+
+        greenLight.addEventListener('click', function() {
+            resetLights();
+            greenLight.classList.remove("dim");
+            greenLight.classList.add("active");
+            message.textContent = "Go";
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .calculator {
+            width: 320px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .display {
+            width: 100%;
+            font-size: 2em;
+            padding: 15px;
+            border: none;
+            text-align: right;
+            background-color: #ddd;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .buttons button {
+            padding: 20px;
+            font-size: 1.2em;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled />
+        <div class="buttons">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>+</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>-</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>*</button>
+            <button>0</button>
+            <button>C</button>
+            <button>=</button>
+            <button>/</button>
+        </div>
+    </div>
+    <script>
+        const table = document.querySelector(".calculator");
+        let input = document.querySelector(".display");
+        let operators = ["+", "-", "*", "/", "."];  
+    
+        table.addEventListener("click", (event) => {
+            let targetPoint = event.target;
+    
+            if (targetPoint.tagName === "BUTTON") {
+                let buttonText = targetPoint.innerHTML;
+                let oldValue = input.value;
+                let lastChar = oldValue[oldValue.length - 1];  
+                
+               
+                let afterLastChar = oldValue.slice(0, -1);
+    
+                
+                if (buttonText === "C") {
+                    input.value = '';
+                } 
+               
+                else if (buttonText === "=") {
+                    try {
+                        input.value = eval(input.value);  
+                    } catch {
+                        input.value = "Error";  
+                    }
+                } 
+                
+                else if (operators.includes(buttonText)) {
+                    if (oldValue === '-') {
+
+                        return;  
+
+                    } else if (operators.includes(lastChar)) {
+                        
+                        input.value = afterLastChar + buttonText;
+                    } else {
+                        input.value += buttonText;  
+                    }
+                } 
+               
+                else {
+                    input.value += buttonText;
+                }
+            }
+        });
+    </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        #user-input {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #add-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #add-btn:hover {
+            background-color: #218838;
+        }
+
+        #task-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0 0;
+        }
+
+        #task-list li {
+            position: relative;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #task-list li button {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #task-list li button:hover {
+            background-color: #c82333;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        span {
+            position: absolute;
+            right: 10px;
+            font-size: 24px;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+
+        .activeLi {
+            text-decoration: line-through;
+            background-color: rgb(204, 234, 234) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>To-Do List</h1>
+        <input type="text" id="user-input" placeholder="Enter your task" />
+        <button id="add-btn">Add</button>
+        <ul id="task-list"></ul>
+    </div>
+
+    <script>
+        let userInput = document.querySelector("#user-input");
+        let addBtn = document.querySelector("#add-btn");
+        let ul = document.querySelector("#task-list");
+
+        window.onload = () => {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+            ul.innerHTML = '';
+
+            tasks.forEach(task => addTaskToUI(task));
+        };
+
+        addBtn.addEventListener("click", () => {
+            let newTask = userInput.value.trim();
+            if (newTask !== '' && newTask !== "First Enter your task") {
+                addTaskToUI(newTask);
+                saveTask(newTask);
+                userInput.value = '';
+            } else {
+
+                userInput.value = "First Enter your task";
+                userInput.style.color = "red";
+                userInput.disabled = true;
+                addBtn.disabled = true;
+            }
+
+
+            setTimeout(() => {
+                if (userInput.value === "First Enter your task") {
+                    userInput.value = '';
+                    userInput.style.color = "black";
+                    userInput.disabled = false;
+                    addBtn.disabled = false;
+                }
+            }, 2000);
+        });
+
+
+        function addTaskToUI(task) {
+            if (typeof task !== 'string') {
+                console.error("Task should be a string");
+                return;
+            }
+
+            let newLi = document.createElement("li");
+            newLi.textContent = task;
+
+            let crossBtn = document.createElement("span");
+            crossBtn.innerHTML = "&times";
+            crossBtn.style.cursor = "pointer";
+            crossBtn.onclick = () => {
+                removeTask(task);
+                newLi.remove();
+            };
+
+            newLi.appendChild(crossBtn);
+            ul.appendChild(newLi);
+
+            newLi.onclick = () => {
+                newLi.classList.toggle("activeLi");
+            };
+        }
+
+
+        function saveTask(task) {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.push(task);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+
+        function removeTask(task) {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks = tasks.filter(t => t !== task);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+    </script>
+</body>
+
+</html>

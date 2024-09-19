@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Eligibility Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .checker-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .checker-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .checker-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .checker-container input:focus {
+            border-color: #007bff;
+        }
+
+        .checker-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checker-container button:hover {
+            background-color: #218838;
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .eligible {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .not-eligible {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checker-container">
+        <h1>Voting Eligibility Checker</h1>
+        <input type="number" id="ageInput" placeholder="Enter your age" min="0">
+        <button onclick="checkEligibility()">Check Eligibility</button>
+        <div class="result-message" id="resultMessage"></div>
+    </div>
+
+    <script>
+        function checkEligibility() {
+            const age = document.getElementById('ageInput').value;
+            const resultMessage = document.getElementById('resultMessage');
+
+           
+            resultMessage.style.display = 'block';
+
+       
+            if (age === '') {
+                resultMessage.textContent = "Please enter your age.";
+                resultMessage.classList.remove('eligible', 'not-eligible');
+            } else if (age >= 18) {
+                resultMessage.textContent = "You are eligible to vote!";
+                resultMessage.classList.add('eligible');
+                resultMessage.classList.remove('not-eligible');
+            } else {
+                resultMessage.textContent = "Sorry, you are not eligible to vote.";
+                resultMessage.classList.add('not-eligible');
+                resultMessage.classList.remove('eligible');
+            }
+
+         
+            setTimeout(function() {
+                document.getElementById('ageInput').value = '';
+                resultMessage.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
